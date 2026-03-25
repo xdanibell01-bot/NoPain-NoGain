@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Doble o Nada</title>
+<link rel="icon" href="logo nopain.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+<!-- 🎵 MÚSICA DE FONDO -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="MUSICA.mp3" type="audio/mpeg">
+  <!-- CAMBIA por tu música MP3: src="tu-musica.mp3" -->
+   </audio>
+</head>
+
+<body class="doble">
+
+<div class="top-section">
+  <h2>⚡ NoPain NoGain</h2>
+  <p class="subtext">Doble o nada</p>
+
+  <div class="menu">
+    <a href="index.html">Inicio</a>
+    <a href="beneficios.html">Beneficios</a>
+    <a href="funciona.html">Cómo funciona</a>
+    <a href="doble.html">Doble</a>
+    <a href="invitar.html">Invitar</a>
+    <a href="deposito.html">Depósito</a>
+    <a href="reglas.html">Reglas</a>
+    <a href="retoactivo.html">Reto Activo</a>
+  </div>
+</div>
+
+<section>
+<h1>🎲 Doble o nada</h1>
+<h2 style="color:#ef4444;">⚠️ Alto riesgo - Alto premio</h2>
+
+<div class="card">
+  <p><strong>REGLAS:</strong></p>
+  <ul style="text-align:left;color:#ccc;">
+    <li>🔄 Reinicia el MISMO reto</li>
+    <li>💰 DUPLICA todas las apuestas</li>
+    <li>👥 Mismos participantes</li>
+    <li>⏰ Mismo tiempo</li>
+    <li>🏆 Ganador se lleva TODO (x2)</li>
+  </ul>
+  
+  <div style="text-align:center;margin:30px 0;">
+    <h3>Recompensa potencial:</h3>
+    <h1 id="premioDoble" style="color:#f59e0b;font-size:48px;">0 SOL</h1>
+  </div>
+  
+  <button id="btnDoble" class="big-btn" onclick="activarDoble()" style="width:100%;padding:20px;font-size:20px;">
+    🎲 ACEPTAR DOBLE O NADA
+  </button>
+</div>
+</section>
+
+<!-- 🆕 PANTALLA EMERGENTE DOBLE -->
+<div id="modalDoble" class="modalDoble" style="display:none;">
+  <div class="modal-content">
+    <h2>⚡ DOBLE O NADA ACTIVADO</h2>
+    <p id="modalInfo"></p>
+    
+    <div style="background:rgba(255,255,255,0.1);padding:20px;border-radius:15px;margin:20px 0;">
+      <h3>Reto reiniciado:</h3>
+      <p><strong id="modalReto"></strong></p>
+      <p>Pool: <span id="modalPool" style="color:#f59e0b;"></span></p>
+      <p>Usuarios: <span id="modalUsuarios"></span></p>
+    </div>
+    
+    <div style="display:flex;gap:15px;">
+      <button class="big-btn" onclick="confirmarDoble()" style="flex:1;background:#f59e0b;color:black;">✅ EMPEZAR</button>
+      <button class="big-btn" onclick="cancelarDoble()" style="flex:1;background:#6b7280;">❌ Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div id="blockchainLog"></div>
+
+<script src="app.js"></script>
+<script>
+// ===== 🎲 DOBLE O NADA (INTEGRADO CON APP.JS) =====
+function activarDoble(){
+    if(!appState.challenge){
+        showToast("❌ Crea un reto primero", "error");
+        return;
+    }
+    
+    const premio = (appState.challenge.pool * 2).toFixed(2);
+    document.getElementById("premioDoble").innerText = premio + " SOL";
+    
+    // Mostrar modal
+    document.getElementById("modalDoble").style.display = "flex";
+    document.body.style.overflow = "hidden";
+    
+    // Llenar info
+    document.getElementById("modalInfo").innerText = 
+        `¡ARRIESGADO! Duplicamos todas las apuestas. Ganador se lleva ${premio} SOL`;
+    
+    document.getElementById("modalReto").innerText = appState.challenge.name;
+    document.getElementById("modalPool").innerText = 
+        `${appState.challenge.pool.toFixed(2)} → ${(appState.challenge.pool*2).toFixed(2)} SOL`;
+    document.getElementById("modalUsuarios").innerText = 
+        appState.challenge.participants.length + " usuarios";
+}
+
+function confirmarDoble(){
+    if(!appState.challenge) return;
+    
+    // 🔄 REINICIAR RETO CON DOBLE
+    const oldPool = appState.challenge.pool;
+    appState.challenge.pool *= 2;  // DUPLICAR POOL
+    appState.challenge.currentDay = 0;  // REINICIAR DÍA
+    appState.challenge.startTime = Date.now();  // REINICIAR TIMER
+    
+    saveState();
+    renderReto();
+    
+    // LOGS ÉPICOS
+    showToast("🚀 DOBLE O NADA ACTIVADO - ¡Buena suerte!");
+    
+    // CERRAR MODAL
+    document.getElementById("modalDoble").style.display = "none";
+    document.body.style.overflow = "auto";
+    
+    // REDIRIGIR
+    setTimeout(()=>window.location.href = "retoactivo.html", 1000);
+}
+
+function cancelarDoble(){
+    document.getElementById("modalDoble").style.display = "none";
+    document.body.style.overflow = "auto";
+    showToast("Cancelado");
+}
+
+// Cerrar modal clic fuera
+document.addEventListener("DOMContentLoaded", function(){
+    const modal = document.getElementById("modalDoble");
+    if(modal){
+        modal.addEventListener("click", function(e){
+            if(e.target.id === "modalDoble") cancelarDoble();
+        });
+    }
+});
+</script>
+
+<style>
+/* ===== MODAL DOBLE O NADA ===== */
+.modalDoble {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    animation: modalIn 0.4s ease;
+}
+
+@keyframes modalIn {
+    from { opacity:0; transform:scale(0.8); }
+    to { opacity:1; transform:scale(1); }
+}
+
+.modal-content {
+    background:linear-gradient(135deg,#1e1b4b,#2d1b69);
+    padding:40px;
+    border-radius:25px;
+    max-width:500px;
+    width:90%;
+    text-align:center;
+    box-shadow:0 30px 80px rgba(239,68,68,0.4);
+    border:2px solid rgba(239,68,68,0.3);
+}
+
+.modal-content h2 {
+    background:linear-gradient(90deg,#f59e0b,#fbbf24);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+#btnDoble:hover {
+    background:linear-gradient(90deg,#dc2626,#ef4444) !important;
+    box-shadow:0 0 40px rgba(239,68,68,0.6);
+    transform:scale(1.05);
+}
+</style>
+
+</body>
+</html>
