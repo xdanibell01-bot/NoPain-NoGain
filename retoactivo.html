@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reto Activo</title>
+<link rel="icon" href="logo nopain.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+<!-- 🎵 MÚSICA DE FONDO -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="MUSICA.mp3" type="audio/mpeg">
+  <!-- CAMBIA por tu música MP3: src="tu-musica.mp3" -->
+   </audio>
+</head>
+
+<body class="reto">
+
+<div class="top-section">
+  <h2>⚡ NoPain NoGain</h2>
+  <p class="subtext">Reto Activo</p>
+  <div class="menu">
+    <a href="index.html">Inicio</a> | <a href="retoactivo.html">Reto</a> | <a href="invitar.html">Invitar</a>
+  </div>
+</div>
+
+<section class="reto">
+<h2>🔥 Reto en curso</h2>
+
+<div class="reto-container">
+  <div class="app-card">
+    <h3>💪 <span id="nombreReto">-</span></h3>
+    <p>Inicio: <span id="inicioReto">-</span> | Fin: <span id="finReto">-</span></p>
+    
+    <div class="progress">
+      <div id="bar" class="progress-bar" style="width:0%"></div>
+    </div>
+    
+    <h2 id="textoProgreso" style="color:#22c55e;">Día 0 de 0</h2>
+    <button class="big-btn" onclick="sumarProgreso()">✅ Completar día</button>
+  </div>
+
+  <div class="app-card">
+    <h3>💰 POOL TOTAL</h3>
+    <h1 id="pool" style="color:#22c55e;font-size:64px;">0 SOL</h1>
+    <p style="color:#888;">Dinero BLOQUEADO en smart contract</p>
+  </div>
+
+  <div class="app-card">
+    <h3>👥 Participantes (<span id="countParticipantes">0</span>)</h3>
+    <div id="listaParticipantes" style="max-height:200px;overflow:auto;"></div>
+    
+    <input id="nuevoUsuario" placeholder="Nombre nuevo usuario">
+    <button class="big-btn" onclick="agregarUsuario()">➕ Agregar</button>
+    <br><br>
+    <input id="eliminarUsuario" placeholder="Eliminar usuario">
+    <button class="big-btn" onclick="eliminarUsuario()">➖ Eliminar</button>
+  </div>
+</div>
+
+<div class="app-card" style="max-width:400px;margin:40px auto;">
+  <h3>🗳️ Votación salida</h3>
+  <button class="big-btn" onclick="votarSalida()" style="background:#ef4444;">🚪 Salir del reto</button>
+  <p id="votosSalida">0 votos (necesitas mayoría)</p>
+</div>
+
+</section>
+
+<div id="blockchainLog"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
