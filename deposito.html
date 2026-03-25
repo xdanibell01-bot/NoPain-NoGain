@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Depósito</title>
+<link rel="icon" href="logo nopain.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+<!-- 🎵 MÚSICA DE FONDO -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="MUSICA.mp3" type="audio/mpeg">
+  <!-- CAMBIA por tu música MP3: src="tu-musica.mp3" -->
+   </audio>
+</head>
+
+<body class="deposito">
+<div class="top-section">
+  <h2>⚡ NoPain NoGain</h2>
+  <p class="subtext">Wallet</p>
+  <div class="menu">
+    <a href="index.html">Inicio</a> | <a href="deposito.html">Depósito</a>
+  </div>
+</div>
+
+<section style="max-width:500px;padding:30px;margin-bottom:20px;">
+<h1>💳 Gestionar SOL</h1>
+
+<div class="app-card">
+  <h3>Balance</h3>
+  <h2 class="wallet" style="font-size:45px;color:#22c55e;">0 SOL</h2>
+</div>
+
+<div class="card">
+  <input id="cantidad" type="number" step="0.1" placeholder="Cantidad SOL" style="width:100%;padding:10px;margin-bottom:15px;">
+  <div style="display:flex;gap:15px;">
+    <button class="big-btn" onclick="depositar()" style="flex:2;background:#22c55e;">➕ Depositar</button>
+    <button class="big-btn" onclick="retirar()" style="flex:2;background:#ef4444;">➖ Retirar</button>
+  </div>
+</div>
+</section>
+
+<div id="blockchainLog"></div>
+<script src="app.js"></script>
+</body>
+</html>
