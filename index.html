@@ -1,0 +1,100 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NoPain NoGain</title>
+<link rel="stylesheet" href="style.css">
+<!-- 🎵 MÚSICA DE FONDO -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="MUSICA.mp3" type="audio/mpeg">
+  <!-- CAMBIA por tu música MP3: src="tu-musica.mp3" -->
+</audio>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Poppins:wght@300;400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="inicio">
+
+<div id="reward" class="reward">+0.3 SOL</div>
+
+<div class="wallet">🟢 Conectar Wallet</div>
+
+<button onclick="toggleMusic()" style="position:fixed; bottom:20px; right:20px; z-index:999; padding:12px; border-radius:50%; background:rgba(0,0,0,0.7); border:none; color:white; font-size:16px; cursor:pointer;">
+🎵
+</button>
+
+<div class="top-section">
+  <h2>⚡ NoPain NoGain</h2>
+  <p class="subtext">Convierte disciplina en dinero</p>
+
+  <div class="menu">
+    <a href="index.html">Inicio</a>
+    <a href="beneficios.html">Beneficios</a>
+    <a href="funciona.html">Cómo funciona</a>
+    <a href="doble.html">Doble</a>
+    <a href="invitar.html">Invitar</a>
+    <a href="deposito.html">Depósito</a>
+    <a href="reglas.html">Reglas</a>
+    <a href="retoactivo.html">Reto Activo</a>
+  </div>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Convierte disciplina en dinero 💸</h1>
+      <p class="subtext">Duolingo pero con dinero en juego</p>
+      <button class="big-btn" onclick="document.querySelector('.create').scrollIntoView({behavior:'smooth'})">Explorar</button>
+    </div>
+    <div class="hero-img">
+      <img src="apu1.png" alt="NoPain NoGain App" style="width:500px;height:300px;object-fit:cover;border-radius:20px;">
+    </div>
+  </section>
+</div>
+
+<section class="dashboard">
+  <h2>🚀 Tu progreso</h2>
+  <div class="dashboard-card">
+    <h3 id="nombreReto">Sin reto</h3>
+    <div class="progress">
+      <div class="progress-bar" id="bar" style="width:0%"></div>
+    </div>
+    <p id="textoProgreso">Sin reto activo</p>
+    <button class="big-btn" onclick="sumarProgreso()">Completar día</button>
+  </div>
+</section>
+
+<section class="create">
+  <h2>🎯 Crear reto</h2>
+  <div class="app-card">
+    <input id="retoNombre" placeholder="Ej: Gym diario">
+    <input id="retoApuesta" type="number" step="0.1" placeholder="Apuesta (SOL)" min="0.1" max="10">
+    <input id="retoDias" type="number" placeholder="Días" min="1" max="365">
+    <input id="retoInicio" type="date">
+    <input id="retoFin" type="date">
+    <button class="big-btn" onclick="crearReto()">🚀 Crear reto</button>
+  </div>
+</section>
+
+<section class="advanced">
+  <h2>🔥 Sistema en vivo</h2>
+  <div class="advanced-grid">
+    <div class="app-card">
+      <h3>⏳ Timer activo</h3>
+      <h1 id="timer" style="font-size:48px;margin:10px 0;">00:00:00</h1>
+      <p id="pool" style="color:#22c55e;font-size:24px;">0 SOL en juego</p>
+    </div>
+    <div class="app-card">
+      <h3>💀 Modo muerte</h3>
+      <h2 style="color:#ef4444;">🔥SIN GANADOR NO HAY DINERO🔥</h2>
+    </div>
+    <div class="app-card">
+      <h3>📸 Evidencia</h3>
+      <input type="file" accept="image/*" onchange="subirPrueba(event)">
+      <p id="estadoPrueba">Sin prueba</p>
+    </div>
+  </div>
+</section>
+
+<div id="blockchainLog"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
